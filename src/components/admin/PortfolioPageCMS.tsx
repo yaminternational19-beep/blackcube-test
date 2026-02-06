@@ -60,7 +60,7 @@ export function PortfolioPageCMS() {
   // Portfolio items (grid + featured)
   type TeamGroup = { role: string; people: string[] };
   type PortfolioItem = {
-    id?: number | string; // Can be numeric (Date.now() for new) or string (MongoDB _id for existing)
+    id: number | string; // Can be numeric (Date.now() for new) or string (MongoDB _id for existing)
     _id?: string; // MongoDB ObjectId (fallback for backend items)
     title: string;
     description: string;
@@ -295,10 +295,11 @@ export function PortfolioPageCMS() {
     try {
       const res = await uploadApi.uploadImage(file);
       if (res.success && res.data) {
+        const uploadedUrl = res.data?.url || '';
         setPortfolioItems(prevItems =>
           prevItems.map(item =>
             item.id === itemId
-              ? { ...item, [field]: res.data.url }
+              ? { ...item, [field]: uploadedUrl }
               : item
           )
         );
@@ -347,11 +348,11 @@ export function PortfolioPageCMS() {
     }
   };
 
-  const addTechnologyToItem = (itemId: number) => {
+  const addTechnologyToItem = (itemId: string | number) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) updatePortfolioItem(itemId, 'technologies', [...item.technologies, 'New Tech']);
   };
-  const updateTechnologyInItem = (itemId: number, techIndex: number, value: string) => {
+  const updateTechnologyInItem = (itemId: string | number, techIndex: number, value: string) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) {
       const updated = [...item.technologies];
@@ -359,7 +360,7 @@ export function PortfolioPageCMS() {
       updatePortfolioItem(itemId, 'technologies', updated);
     }
   };
-  const deleteTechnologyInItem = (itemId: number, techIndex: number) => {
+  const deleteTechnologyInItem = (itemId: string | number, techIndex: number) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) updatePortfolioItem(itemId, 'technologies', item.technologies.filter((_, idx) => idx !== techIndex));
   };
@@ -372,11 +373,11 @@ export function PortfolioPageCMS() {
   };
   const deleteCategory = (index: number) => setCategories(categories.filter((_, i) => i !== index));
 
-  const addMethod = (itemId: number) => {
+  const addMethod = (itemId: string | number) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) updatePortfolioItem(itemId, 'methods', [...(item.methods || []), 'New Method']);
   };
-  const updateMethod = (itemId: number, methodIndex: number, value: string) => {
+  const updateMethod = (itemId: string | number, methodIndex: number, value: string) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) {
       const updated = [...(item.methods || [])];
@@ -384,16 +385,16 @@ export function PortfolioPageCMS() {
       updatePortfolioItem(itemId, 'methods', updated);
     }
   };
-  const deleteMethod = (itemId: number, methodIndex: number) => {
+  const deleteMethod = (itemId: string | number, methodIndex: number) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) updatePortfolioItem(itemId, 'methods', (item.methods || []).filter((_, idx) => idx !== methodIndex));
   };
 
-  const addTeamGroup = (itemId: number) => {
+  const addTeamGroup = (itemId: string | number) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) updatePortfolioItem(itemId, 'team', [...(item.team || []), { role: 'Role', people: ['Name'] }]);
   };
-  const updateTeamGroup = (itemId: number, groupIndex: number, field: 'role' | 'people', value: string, personIndex?: number) => {
+  const updateTeamGroup = (itemId: string | number, groupIndex: number, field: 'role' | 'people', value: string, personIndex?: number) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (!item) return;
     const groups = [...(item.team || [])];
@@ -406,11 +407,11 @@ export function PortfolioPageCMS() {
     }
     updatePortfolioItem(itemId, 'team', groups);
   };
-  const deleteTeamGroup = (itemId: number, groupIndex: number) => {
+  const deleteTeamGroup = (itemId: string | number, groupIndex: number) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) updatePortfolioItem(itemId, 'team', (item.team || []).filter((_, idx) => idx !== groupIndex));
   };
-  const deleteTeamPerson = (itemId: number, groupIndex: number, personIndex: number) => {
+  const deleteTeamPerson = (itemId: string | number, groupIndex: number, personIndex: number) => {
     const item = portfolioItems.find(i => i.id === itemId);
     if (item) {
       const groups = [...(item.team || [])];

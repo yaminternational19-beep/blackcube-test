@@ -88,7 +88,20 @@ export function CareerPageCMS() {
   });
 
   // Job postings list (align with page.tsx)
-  const [jobPostings, setJobPostings] = useState([
+  type JobPosting = {
+    id: number;
+    _id?: string;
+    title: string;
+    department: string;
+    type: string;
+    location: string;
+    salary: string;
+    postedDate: string;
+    description: string;
+    requirements: string[];
+  };
+
+  const [jobPostings, setJobPostings] = useState<JobPosting[]>([
     {
       id: 1,
       title: 'Senior Frontend Developer',
