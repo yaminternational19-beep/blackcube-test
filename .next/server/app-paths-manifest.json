@@ -1,0 +1,16 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/about/page": "app/about/page.js",
+  "/admin/login/page": "app/admin/login/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/api/cms/[section]/route": "app/api/cms/[section]/route.js",
+  "/career/page": "app/career/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/cookies/page": "app/cookies/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/portfolio/page": "app/portfolio/page.js",
+  "/privacy/page": "app/privacy/page.js",
+  "/services/page": "app/services/page.js",
+  "/terms/page": "app/terms/page.js"
+}
