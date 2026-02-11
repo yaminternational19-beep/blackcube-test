@@ -1,23 +1,26 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-const baseUrl = 'https://blackcube.ae';
+const baseUrl = "https://blackcube.ae";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
-  title: "Black Cube Solutions LLC - Empowering Digital Transformation",
-  description: "Leading IT solutions provider in Dubai, UAE. We offer web development, mobile apps, UI/UX design, digital marketing, and cloud solutions to help businesses grow digitally.",
+  title: "Black Cube Solutions LLC | Digital Transformation Company in UAE",
+  description:
+    "Black Cube Solutions LLC is a digital transformation company in the UAE delivering web & mobile development, cloud migration, UX/UI, digital strategy, and enterprise software solutions.",
   keywords: [
-    "web development",
-    "mobile apps",
-    "UI/UX design",
-    "digital marketing",
-    "cloud solutions",
+    "digital transformation",
+    "digital transformation UAE",
     "Dubai",
     "UAE",
-    "IT solutions",
-    "software development",
-    "web design"
+    "web development",
+    "mobile app development",
+    "cloud migration",
+    "UX",
+    "UI",
+    "digital strategy",
+    "IT consulting",
+    "enterprise software",
   ],
   authors: [{ name: "Black Cube Solutions LLC", url: baseUrl }],
   creator: "Black Cube Solutions LLC",
@@ -26,8 +29,9 @@ export const metadata: Metadata = {
     canonical: baseUrl,
   },
   openGraph: {
-    title: "Black Cube Solutions LLC - Empowering Digital Transformation",
-    description: "Leading IT solutions provider in Dubai, UAE. We offer comprehensive digital solutions to help businesses grow and succeed.",
+    title: "Black Cube Solutions LLC | Digital Transformation Company in UAE",
+    description:
+      "Black Cube Solutions LLC is a digital transformation company in the UAE delivering web & mobile development, cloud migration, UX/UI, digital strategy, and enterprise software solutions.",
     url: baseUrl,
     type: "website",
     locale: "en_US",
@@ -43,9 +47,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Black Cube Solutions LLC - Empowering Digital Transformation",
-    description: "Leading IT solutions provider in Dubai, UAE. We offer comprehensive digital solutions to help businesses grow and succeed.",
+    title: "Black Cube Solutions LLC | Digital Transformation Company in UAE",
+    description:
+      "Black Cube Solutions LLC is a digital transformation company in the UAE delivering web & mobile development, cloud migration, UX/UI, digital strategy, and enterprise software solutions.",
     creator: "@blackcubesolutions",
+    site: "@blackcubesolutions",
   },
   robots: {
     index: true,
@@ -101,6 +107,7 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#ffffff" />
+          <meta name="robots" content="index, follow" />
         <link rel="canonical" href={baseUrl} />
         <link rel="sitemap" type="application/xml" href={`${baseUrl}/sitemap.xml`} />
         {/* Organization JSON-LD Structured Data */}

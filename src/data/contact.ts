@@ -25,7 +25,7 @@ export const defaultContactPageData = {
       id: 3,
       icon: 'Mail',
       title: 'Email',
-      details: 'info@blackcubesolutions.com',
+      details: 'info@blackcube.ae',
       description: 'Send us an email'
     },
     {

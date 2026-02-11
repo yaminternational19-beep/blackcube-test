@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://blackcubesolutions.com/sitemap.xml
+Sitemap: https://blackcube.ae/sitemap.xml

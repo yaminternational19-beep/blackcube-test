@@ -269,7 +269,7 @@ export const companyInfo: CompanyInfo = {
   name: 'Black Cube Solutions LLC',
   address: 'Business Bay, Dubai, UAE',
   phone: '+971 4 123 4567',
-  email: 'info@blackcubesolutions.com',
+  email: 'info@blackcube.ae',
   social: {
     linkedin: 'https://linkedin.com/company/black-cube-solutions',
     twitter: 'https://twitter.com/blackcubesolutions',
