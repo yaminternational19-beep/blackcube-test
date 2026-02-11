@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+Host: https://blackcube.ae
+Sitemap: https://blackcube.ae/sitemap.xml

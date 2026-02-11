@@ -1,16 +1,18 @@
 {
+  "/api/cms/[section]/route": "/api/cms/[section]",
+  "/favicon.ico/route": "/favicon.ico",
+  "/robots.txt/route": "/robots.txt",
+  "/sitemap.xml/route": "/sitemap.xml",
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
   "/admin/login/page": "/admin/login",
   "/admin/page": "/admin",
-  "/api/cms/[section]/route": "/api/cms/[section]",
   "/career/page": "/career",
-  "/contact/page": "/contact",
   "/cookies/page": "/cookies",
-  "/favicon.ico/route": "/favicon.ico",
+  "/contact/page": "/contact",
   "/page": "/",
   "/portfolio/page": "/portfolio",
+  "/terms/page": "/terms",
   "/privacy/page": "/privacy",
-  "/services/page": "/services",
-  "/terms/page": "/terms"
+  "/services/page": "/services"
 }
