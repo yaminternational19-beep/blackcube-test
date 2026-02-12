@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2, Save, Eye, Upload, Image as ImageIcon, X } from "lucide-react";
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { pageApi, uploadApi } from "@/lib/api";
+import { pageApi, uploadApi, getAssetUrl } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 
 // Custom styled input components for admin
@@ -359,8 +359,8 @@ export function AboutPageCMS() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-white">About Page CMS</h2>
-        <Button 
-          onClick={handleSave} 
+        <Button
+          onClick={handleSave}
           className="group"
           disabled={loading || saveStatus === 'saving'}
         >
@@ -392,7 +392,7 @@ export function AboutPageCMS() {
                 <label className="block text-white font-medium mb-2">Title</label>
                 <AdminInput
                   value={heroContent.title}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({...heroContent, title: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({ ...heroContent, title: e.target.value })}
                   placeholder="Enter title"
                 />
               </div>
@@ -400,7 +400,7 @@ export function AboutPageCMS() {
                 <label className="block text-white font-medium mb-2">Subtitle</label>
                 <AdminTextarea
                   value={heroContent.subtitle}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeroContent({...heroContent, subtitle: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeroContent({ ...heroContent, subtitle: e.target.value })}
                   placeholder="Enter subtitle"
                   rows={3}
                 />
@@ -410,7 +410,7 @@ export function AboutPageCMS() {
                   <label className="block text-white font-medium mb-2">Primary CTA</label>
                   <AdminInput
                     value={heroContent.primaryCta}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({...heroContent, primaryCta: e.target.value})}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({ ...heroContent, primaryCta: e.target.value })}
                     placeholder="Primary CTA text"
                   />
                 </div>
@@ -418,7 +418,7 @@ export function AboutPageCMS() {
                   <label className="block text-white font-medium mb-2">Secondary CTA</label>
                   <AdminInput
                     value={heroContent.secondaryCta}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({...heroContent, secondaryCta: e.target.value})}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeroContent({ ...heroContent, secondaryCta: e.target.value })}
                     placeholder="Secondary CTA text"
                   />
                 </div>
@@ -523,7 +523,7 @@ export function AboutPageCMS() {
               Add Milestone
             </Button>
           </div>
-          
+
           <div className="space-y-4">
             {milestones.map((milestone, index) => (
               <Card key={index} hover className="p-6">
@@ -557,88 +557,88 @@ export function AboutPageCMS() {
             ))}
           </div>
 
-        {/* Section Headings (Awards, Achievements, Team) */}
-        <Card hover className="p-6">
-          <CardHeader>
-            <CardTitle>Section Headings</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Awards */}
-            <div>
-              <div className="mb-3 text-white font-semibold">Awards</div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <AdminInput
-                  value={headings.awardsTitlePrefix}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, awardsTitlePrefix: e.target.value })}
-                  placeholder="Title prefix (e.g., Our Awards &)"
-                />
-                <AdminInput
-                  value={headings.awardsTitleHighlight}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, awardsTitleHighlight: e.target.value })}
-                  placeholder="Title highlight (e.g., Recognitions)"
-                />
+          {/* Section Headings (Awards, Achievements, Team) */}
+          <Card hover className="p-6">
+            <CardHeader>
+              <CardTitle>Section Headings</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Awards */}
+              <div>
+                <div className="mb-3 text-white font-semibold">Awards</div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <AdminInput
+                    value={headings.awardsTitlePrefix}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, awardsTitlePrefix: e.target.value })}
+                    placeholder="Title prefix (e.g., Our Awards &)"
+                  />
+                  <AdminInput
+                    value={headings.awardsTitleHighlight}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, awardsTitleHighlight: e.target.value })}
+                    placeholder="Title highlight (e.g., Recognitions)"
+                  />
+                </div>
+                <div className="mt-3">
+                  <AdminTextarea
+                    rows={3}
+                    value={headings.awardsDescription}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeadings({ ...headings, awardsDescription: e.target.value })}
+                    placeholder="Section description"
+                  />
+                </div>
               </div>
-              <div className="mt-3">
-                <AdminTextarea
-                  rows={3}
-                  value={headings.awardsDescription}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeadings({ ...headings, awardsDescription: e.target.value })}
-                  placeholder="Section description"
-                />
-              </div>
-            </div>
 
-            {/* Achievements */}
-            <div>
-              <div className="mb-3 text-white font-semibold">Achievements</div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <AdminInput
-                  value={headings.achievementsTitlePrefix}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, achievementsTitlePrefix: e.target.value })}
-                  placeholder="Title prefix (e.g., Our)"
-                />
-                <AdminInput
-                  value={headings.achievementsTitleHighlight}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, achievementsTitleHighlight: e.target.value })}
-                  placeholder="Title highlight (e.g., Achievements)"
-                />
+              {/* Achievements */}
+              <div>
+                <div className="mb-3 text-white font-semibold">Achievements</div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <AdminInput
+                    value={headings.achievementsTitlePrefix}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, achievementsTitlePrefix: e.target.value })}
+                    placeholder="Title prefix (e.g., Our)"
+                  />
+                  <AdminInput
+                    value={headings.achievementsTitleHighlight}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, achievementsTitleHighlight: e.target.value })}
+                    placeholder="Title highlight (e.g., Achievements)"
+                  />
+                </div>
+                <div className="mt-3">
+                  <AdminTextarea
+                    rows={3}
+                    value={headings.achievementsDescription}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeadings({ ...headings, achievementsDescription: e.target.value })}
+                    placeholder="Section description"
+                  />
+                </div>
               </div>
-              <div className="mt-3">
-                <AdminTextarea
-                  rows={3}
-                  value={headings.achievementsDescription}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeadings({ ...headings, achievementsDescription: e.target.value })}
-                  placeholder="Section description"
-                />
-              </div>
-            </div>
 
-            {/* Team */}
-            <div>
-              <div className="mb-3 text-white font-semibold">Team</div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <AdminInput
-                  value={headings.teamTitlePrefix}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, teamTitlePrefix: e.target.value })}
-                  placeholder="Title prefix (e.g., Our)"
-                />
-                <AdminInput
-                  value={headings.teamTitleHighlight}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, teamTitleHighlight: e.target.value })}
-                  placeholder="Title highlight (e.g., Team Members)"
-                />
+              {/* Team */}
+              <div>
+                <div className="mb-3 text-white font-semibold">Team</div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <AdminInput
+                    value={headings.teamTitlePrefix}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, teamTitlePrefix: e.target.value })}
+                    placeholder="Title prefix (e.g., Our)"
+                  />
+                  <AdminInput
+                    value={headings.teamTitleHighlight}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHeadings({ ...headings, teamTitleHighlight: e.target.value })}
+                    placeholder="Title highlight (e.g., Team Members)"
+                  />
+                </div>
+                <div className="mt-3">
+                  <AdminTextarea
+                    rows={3}
+                    value={headings.teamDescription}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeadings({ ...headings, teamDescription: e.target.value })}
+                    placeholder="Section description"
+                  />
+                </div>
               </div>
-              <div className="mt-3">
-                <AdminTextarea
-                  rows={3}
-                  value={headings.teamDescription}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHeadings({ ...headings, teamDescription: e.target.value })}
-                  placeholder="Section description"
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
         </TabsContent>
 
@@ -676,7 +676,7 @@ export function AboutPageCMS() {
               Add Member
             </Button>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {teamMembers.map((member) => (
               <Card key={member.id} hover className="p-6">
@@ -708,10 +708,10 @@ export function AboutPageCMS() {
                       <label className="block text-white font-medium mb-2">Profile Image</label>
                       {member.image ? (
                         <div className="relative mb-2">
-                          <img 
-                            src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}${member.image}`} 
-                            alt={member.name} 
-                            className="w-full h-48 object-cover rounded-lg" 
+                          <img
+                            src={getAssetUrl(member.image)}
+                            alt={member.name}
+                            className="w-full h-48 object-cover rounded-lg"
                           />
                           <button
                             onClick={() => updateTeamMember(member.id, 'image', '')}
@@ -837,7 +837,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">Section Title</label>
                 <AdminInput
                   value={whyChooseUsSection.title}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({...whyChooseUsSection, title: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({ ...whyChooseUsSection, title: e.target.value })}
                   placeholder="Enter section title"
                 />
               </div>
@@ -845,7 +845,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">Section Subtitle</label>
                 <AdminTextarea
                   value={whyChooseUsSection.subtitle}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setWhyChooseUsSection({...whyChooseUsSection, subtitle: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setWhyChooseUsSection({ ...whyChooseUsSection, subtitle: e.target.value })}
                   placeholder="Enter section subtitle"
                   rows={3}
                 />
@@ -895,7 +895,7 @@ export function AboutPageCMS() {
                     value={whyChooseUsSection.stats.satisfactionRate}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({
                       ...whyChooseUsSection,
-                      stats: {...whyChooseUsSection.stats, satisfactionRate: e.target.value}
+                      stats: { ...whyChooseUsSection.stats, satisfactionRate: e.target.value }
                     })}
                     placeholder="98%"
                   />
@@ -906,7 +906,7 @@ export function AboutPageCMS() {
                     value={whyChooseUsSection.stats.satisfactionLabel}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({
                       ...whyChooseUsSection,
-                      stats: {...whyChooseUsSection.stats, satisfactionLabel: e.target.value}
+                      stats: { ...whyChooseUsSection.stats, satisfactionLabel: e.target.value }
                     })}
                     placeholder="Client Satisfaction Rate"
                   />
@@ -917,13 +917,13 @@ export function AboutPageCMS() {
                     value={whyChooseUsSection.stats.satisfactionSubtext}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setWhyChooseUsSection({
                       ...whyChooseUsSection,
-                      stats: {...whyChooseUsSection.stats, satisfactionSubtext: e.target.value}
+                      stats: { ...whyChooseUsSection.stats, satisfactionSubtext: e.target.value }
                     })}
                     placeholder="Based on 50+ completed projects"
                   />
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-2">Metrics</label>
                 <div className="space-y-4">
@@ -933,10 +933,10 @@ export function AboutPageCMS() {
                         value={metric.label}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           const updated = [...whyChooseUsSection.stats.metrics];
-                          updated[index] = {...updated[index], label: e.target.value};
+                          updated[index] = { ...updated[index], label: e.target.value };
                           setWhyChooseUsSection({
                             ...whyChooseUsSection,
-                            stats: {...whyChooseUsSection.stats, metrics: updated}
+                            stats: { ...whyChooseUsSection.stats, metrics: updated }
                           });
                         }}
                         placeholder="Metric label"
@@ -946,10 +946,10 @@ export function AboutPageCMS() {
                         value={metric.percentage}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           const updated = [...whyChooseUsSection.stats.metrics];
-                          updated[index] = {...updated[index], percentage: parseInt(e.target.value) || 0};
+                          updated[index] = { ...updated[index], percentage: parseInt(e.target.value) || 0 };
                           setWhyChooseUsSection({
                             ...whyChooseUsSection,
-                            stats: {...whyChooseUsSection.stats, metrics: updated}
+                            stats: { ...whyChooseUsSection.stats, metrics: updated }
                           });
                         }}
                         placeholder="Percentage"
@@ -960,7 +960,7 @@ export function AboutPageCMS() {
                         const updated = whyChooseUsSection.stats.metrics.filter((_, i) => i !== index);
                         setWhyChooseUsSection({
                           ...whyChooseUsSection,
-                          stats: {...whyChooseUsSection.stats, metrics: updated}
+                          stats: { ...whyChooseUsSection.stats, metrics: updated }
                         });
                       }} className="border-red-500/30 text-red-400 hover:bg-red-500/10">
                         <Trash2 className="w-3 h-3" />
@@ -991,7 +991,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">CTA Title</label>
                 <AdminInput
                   value={ctaSection.title}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({...ctaSection, title: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({ ...ctaSection, title: e.target.value })}
                   placeholder="Enter CTA title"
                 />
               </div>
@@ -999,7 +999,7 @@ export function AboutPageCMS() {
                 <label className="block text-sm font-medium mb-2">CTA Subtitle</label>
                 <AdminTextarea
                   value={ctaSection.subtitle}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setCtaSection({...ctaSection, subtitle: e.target.value})}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setCtaSection({ ...ctaSection, subtitle: e.target.value })}
                   placeholder="Enter CTA subtitle"
                   rows={3}
                 />
@@ -1009,7 +1009,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Primary CTA</label>
                   <AdminInput
                     value={ctaSection.primaryCta}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({...ctaSection, primaryCta: e.target.value})}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({ ...ctaSection, primaryCta: e.target.value })}
                     placeholder="Primary CTA text"
                   />
                 </div>
@@ -1017,7 +1017,7 @@ export function AboutPageCMS() {
                   <label className="block text-sm font-medium mb-2">Secondary CTA</label>
                   <AdminInput
                     value={ctaSection.secondaryCta}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({...ctaSection, secondaryCta: e.target.value})}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCtaSection({ ...ctaSection, secondaryCta: e.target.value })}
                     placeholder="Secondary CTA text"
                   />
                 </div>

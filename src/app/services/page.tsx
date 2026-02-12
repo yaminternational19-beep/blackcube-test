@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import { Card } from '@/components/ui/Card';
-import { pageApi } from '@/lib/api';
+import { pageApi, getAssetUrl } from '@/lib/api';
 
 const ServicesPage = () => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -146,13 +146,6 @@ const ServicesPage = () => {
     };
     load();
   }, []);
-
-  const getAssetUrl = (value?: string) => {
-    if (!value) return '';
-    if (value.startsWith('http')) return value;
-    const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
-    return `${base}${value}`;
-  };
 
   const filteredServices = selectedCategory === 'All'
     ? services
@@ -408,7 +401,7 @@ const ServicesPage = () => {
                               {tab.thumbnails.slice(0, 2).map((thumb: string, idx: number) => (
                                 <div key={idx} className="bg-[#0a0a0a] rounded-xl overflow-hidden h-64 flex items-center justify-center">
                                   {thumb ? (
-                                    <img src={thumb} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                                    <img src={getAssetUrl(thumb)} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
                                   ) : (
                                     <div className="text-gray-500 text-sm">Project Thumbnail {idx + 1}</div>
                                   )}

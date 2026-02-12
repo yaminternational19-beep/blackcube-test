@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2, Save, Edit, Eye, Upload, X } from "lucide-react";
-import { pageApi, portfolioApi, uploadApi } from "@/lib/api";
+import { pageApi, portfolioApi, uploadApi, getAssetUrl } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 
 
@@ -216,7 +216,7 @@ export function PortfolioPageCMS() {
         if (!item.id) continue;
 
         const isNewItem = typeof item.id === 'number';
-        
+
         try {
           if (isNewItem) {
             // New item: remove numeric id before sending, let backend generate _id
@@ -286,10 +286,7 @@ export function PortfolioPageCMS() {
     );
   };
 
-  const getImageUrl = (value?: string) => {
-    if (!value) return '';
-    return value.startsWith('http') ? value : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}${value}`;
-  };
+
 
   const handleProjectImageUpload = async (itemId: number | string, field: 'image' | 'coverImage', file: File) => {
     try {
@@ -331,7 +328,7 @@ export function PortfolioPageCMS() {
           return;
         }
       }
-      
+
       // Remove from state after successful database delete (or immediately for new items)
       setPortfolioItems(prevItems => prevItems.filter(item => item.id !== id));
       toast({
@@ -591,7 +588,7 @@ export function PortfolioPageCMS() {
                       <label className="block text-sm font-medium">Grid Image</label>
                       {item.image ? (
                         <div className="relative">
-                          <img src={getImageUrl(item.image)} alt={item.title} className="w-full h-48 object-cover rounded-lg" />
+                          <img src={getAssetUrl(item.image)} alt={item.title} className="w-full h-48 object-cover rounded-lg" />
                           <button
                             onClick={() => updatePortfolioItem(item.id, 'image', '')}
                             className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600"
@@ -622,7 +619,7 @@ export function PortfolioPageCMS() {
                       <label className="block text-sm font-medium">Featured Cover Image</label>
                       {item.coverImage ? (
                         <div className="relative">
-                          <img src={getImageUrl(item.coverImage)} alt={`${item.title} cover`} className="w-full h-48 object-cover rounded-lg" />
+                          <img src={getAssetUrl(item.coverImage)} alt={`${item.title} cover`} className="w-full h-48 object-cover rounded-lg" />
                           <button
                             onClick={() => updatePortfolioItem(item.id, 'coverImage', '')}
                             className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600"

@@ -25,7 +25,7 @@ import {
 import Layout from '@/components/layout/Layout';
 import Button from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { pageApi, portfolioApi } from '@/lib/api';
+import { pageApi, portfolioApi, getAssetUrl } from '@/lib/api';
 
 // Dynamic Icon Mapping (Emoji → Lucide Icon)
 const iconMap: { [key: string]: React.FC<any> } = {
@@ -124,12 +124,6 @@ const PortfolioPage = () => {
     load();
   }, []);
 
-  const getAssetUrl = (value?: string) => {
-    if (!value) return '';
-    if (value.startsWith('http')) return value;
-    const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
-    return `${base}${value}`;
-  };
 
   // Filter Logic
   const filteredItems = portfolioItems.filter((item) => {
@@ -265,8 +259,8 @@ const PortfolioPage = () => {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={`px-4 py-2 rounded-xl font-medium transition-all ${selectedCategory === cat
-                        ? 'bg-neutral-800 text-white ring-1 ring-white/10'
-                        : 'bg-neutral-900 text-gray-400 hover:bg-neutral-800/60 hover:text-white ring-1 ring-white/5'
+                      ? 'bg-neutral-800 text-white ring-1 ring-white/10'
+                      : 'bg-neutral-900 text-gray-400 hover:bg-neutral-800/60 hover:text-white ring-1 ring-white/5'
                       }`}
                   >
                     {cat}

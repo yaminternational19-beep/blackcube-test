@@ -2,7 +2,27 @@
 
 import axios, { AxiosInstance, AxiosError } from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://techexchange.ae/blackcube_backend/server';
+// Determine API base URL. If NEXT_PUBLIC_API_URL is set to a host (no /api path),
+// append `/api` so frontend endpoints like `/auth/login` map to backend `/api/auth/login`.
+const rawBase = process.env.NEXT_PUBLIC_API_URL;
+
+if (!rawBase) {
+  throw new Error("NEXT_PUBLIC_API_URL is not configured");
+}
+
+const BASE_URL = rawBase.replace(/\/+$/, '');
+
+export const API_BASE_URL = `${BASE_URL}/api`;
+
+// Utility function to get asset URLs (images, files, etc.)
+export const getAssetUrl = (path?: string): string => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+
+  // Ensure path starts with a slash for proper URL construction
+  const sanitizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${BASE_URL}${sanitizedPath}`;
+};
 
 
 // Create axios instance with default config
@@ -80,9 +100,9 @@ async function apiRequest<T>(
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const errorMessage = 
-        (error.response?.data as any)?.message || 
-        error.message || 
+      const errorMessage =
+        (error.response?.data as any)?.message ||
+        error.message ||
         'Request failed';
       throw new Error(errorMessage);
     }
@@ -245,7 +265,7 @@ export const uploadApi = {
   uploadImage: async (file: File): Promise<ApiResponse<{ url: string; filename: string }>> => {
     const formData = new FormData();
     formData.append('image', file);
-    
+
     try {
       const response = await axiosInstance.post('/upload/image', formData, {
         headers: {
@@ -255,9 +275,9 @@ export const uploadApi = {
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorMessage = 
-          (error.response?.data as any)?.message || 
-          error.message || 
+        const errorMessage =
+          (error.response?.data as any)?.message ||
+          error.message ||
           'Upload failed';
         throw new Error(errorMessage);
       }
@@ -270,7 +290,7 @@ export const uploadApi = {
     files.forEach(file => {
       formData.append('images', file);
     });
-    
+
     try {
       const response = await axiosInstance.post('/upload/images', formData, {
         headers: {
@@ -280,9 +300,9 @@ export const uploadApi = {
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorMessage = 
-          (error.response?.data as any)?.message || 
-          error.message || 
+        const errorMessage =
+          (error.response?.data as any)?.message ||
+          error.message ||
           'Upload failed';
         throw new Error(errorMessage);
       }

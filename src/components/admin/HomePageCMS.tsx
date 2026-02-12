@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2, Save, Upload, Image as ImageIcon, X } from "lucide-react";
-import { pageApi, uploadApi } from "@/lib/api";
+import { pageApi, uploadApi, getAssetUrl } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 
 // Custom styled input components for admin
@@ -304,8 +304,8 @@ export function HomePageCMS() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-white">Home Page CMS</h2>
-        <Button 
-          onClick={handleSave} 
+        <Button
+          onClick={handleSave}
           className="group"
           disabled={loading || saveStatus === 'saving'}
         >
@@ -409,7 +409,7 @@ export function HomePageCMS() {
                     <label className="block text-white font-medium mb-2">Image</label>
                     {service.image ? (
                       <div className="relative mb-2">
-                        <img src={service.image.startsWith('http') ? service.image : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}${service.image}`} alt={service.title} className="w-full h-32 object-cover rounded-lg" />
+                        <img src={getAssetUrl(service.image)} alt={service.title} className="w-full h-32 object-cover rounded-lg" />
                         <button
                           onClick={() => updateService(service.id, 'image', '')}
                           className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600"
@@ -510,7 +510,7 @@ export function HomePageCMS() {
                     <label className="block text-white font-medium mb-2">Image</label>
                     {w.image ? (
                       <div className="relative mb-2">
-                        <img src={w.image.startsWith('http') ? w.image : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}${w.image}`} alt={w.title} className="w-full h-32 object-cover rounded-lg" />
+                        <img src={getAssetUrl(w.image)} alt={w.title} className="w-full h-32 object-cover rounded-lg" />
                         <button
                           onClick={() => updateWork(w.id, 'image', '')}
                           className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600"
@@ -576,7 +576,7 @@ export function HomePageCMS() {
                     <label className="block text-white font-medium mb-2">Avatar</label>
                     {t.avatar ? (
                       <div className="relative mb-2">
-                        <img src={t.avatar.startsWith('http') ? t.avatar : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}${t.avatar}`} alt={t.name} className="w-24 h-24 object-cover rounded-full" />
+                        <img src={getAssetUrl(t.avatar)} alt={t.name} className="w-24 h-24 object-cover rounded-full" />
                         <button
                           onClick={() => updateTestimonial(t.id, 'avatar', '')}
                           className="absolute top-0 right-0 p-1 bg-red-500 rounded-full text-white hover:bg-red-600"
@@ -599,10 +599,10 @@ export function HomePageCMS() {
                           }}
                         />
                       </label>
-                      <AdminInput 
-                        value={t.avatar} 
-                        onChange={(e) => updateTestimonial(t.id, "avatar", e.target.value)} 
-                        placeholder="Or enter URL" 
+                      <AdminInput
+                        value={t.avatar}
+                        onChange={(e) => updateTestimonial(t.id, "avatar", e.target.value)}
+                        placeholder="Or enter URL"
                         className="flex-1"
                       />
                     </div>

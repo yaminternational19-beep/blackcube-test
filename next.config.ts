@@ -6,6 +6,16 @@ const nextConfig: NextConfig = {
   },
 
   output: "standalone",
+
+  images: {
+    domains: ['blackcube.ae'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'blackcube.ae',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

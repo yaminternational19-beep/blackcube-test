@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2, Save, Edit, Upload, X } from "lucide-react";
-import { pageApi, serviceApi, uploadApi } from "@/lib/api";
+import { pageApi, uploadApi, getAssetUrl } from '@/lib/api';
 import { useToast } from "@/hooks/use-toast";
 
 // Custom Admin Input Component
@@ -350,29 +350,29 @@ export function ServicesPageCMS() {
   }, []);
 
   const uploadAvatar = async (file: File) => {
-  const formData = new FormData();
-  formData.append('image', file); // MUST match backend
+    const formData = new FormData();
+    formData.append('image', file); // MUST match backend
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload/image`,
-    {
-      method: 'POST',
-      body: formData,
-    }
-  );
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload/image`,
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
 
-  const data = await res.json();
-  return data.data.url; // "/uploads/image-xxxx.webp"
-};
-const handleAvatarChange = async (file: File, index: number) => {
-  const avatarUrl = await uploadAvatar(file);
+    const data = await res.json();
+    return data.data.url; // "/uploads/image-xxxx.webp"
+  };
+  const handleAvatarChange = async (file: File, index: number) => {
+    const avatarUrl = await uploadAvatar(file);
 
-  setTestimonials(prev =>
-    prev.map((t, i) =>
-      i === index ? { ...t, avatar: avatarUrl } : t
-    )
-  );
-};
+    setTestimonials(prev =>
+      prev.map((t, i) =>
+        i === index ? { ...t, avatar: avatarUrl } : t
+      )
+    );
+  };
 
 
   const handleSave = async () => {
@@ -906,7 +906,7 @@ const handleAvatarChange = async (file: File, index: number) => {
                     {testimonial.avatar ? (
                       <div className="relative w-24 h-24">
                         <img
-                          src={testimonial.avatar.startsWith('http') ? testimonial.avatar : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}${testimonial.avatar}`}
+                          src={getAssetUrl(testimonial.avatar)}
                           alt={testimonial.name}
                           className="w-24 h-24 object-cover rounded-full"
                         />

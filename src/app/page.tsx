@@ -22,7 +22,7 @@ import {
   Twitter,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import { pageApi } from "@/lib/api";
+import { pageApi, getAssetUrl } from "@/lib/api";
 import { useRouter } from "next/navigation";
 
 const HomePage = () => {
@@ -57,13 +57,6 @@ const HomePage = () => {
     scroll(scrollRef1.current, 0.3); // right → left
     scroll(scrollRef2.current, 0.3, true); // left → right
   }, []);
-
-  const getAssetUrl = (value?: string) => {
-    if (!value) return '';
-    if (value.startsWith('http')) return value;
-    const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
-    return `${base}${value}`;
-  };
 
   const [heroSlides, setHeroSlides] = useState([
     {
@@ -493,7 +486,7 @@ const HomePage = () => {
                   {/* Card content */}
                   <div className="relative z-10 flex flex-col items-center">
                     <div className="bg-neutral-800/80 backdrop-blur-sm p-4 rounded-full mb-6 flex items-center justify-center ring-1 ring-white/10 group-hover:bg-neutral-700 transition-all duration-300">
-                      { (service as any).image ? (
+                      {(service as any).image ? (
                         <img src={getAssetUrl((service as any).image)} alt={service.title} className="w-12 h-12 rounded-full object-cover" />
                       ) : (
                         <service.icon className="w-6 h-6 text-white opacity-90" />
@@ -520,7 +513,7 @@ const HomePage = () => {
             </div>
           </div>
         </section>
-        
+
         <section id="works" className="py-24 bg-[#1A1A1A] text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-bl from-black via-gray-900 to-black pointer-events-none" />
           <div className="relative z-10 max-w-6xl mx-auto px-6">
@@ -550,32 +543,32 @@ const HomePage = () => {
                   className=""
                 >
                   <Card hover className="rounded-2xl bg-[#0b0b0b] overflow-hidden transition-all duration-300 ring-1 ring-white/5 hover:ring-white/10 hover:-translate-y-1.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] border-0">
-                  {/* Top Card Section */}
-                  <div className="relative h-56 bg-gradient-to-b from-[#0f172a] to-black flex items-center justify-center rounded-t-2xl">
-                    { (work as any).image && (
-                      <img src={getAssetUrl((work as any).image)} alt={work.title} className="absolute inset-0 w-full h-full object-cover opacity-70" />
-                    )}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)]" />
+                    {/* Top Card Section */}
+                    <div className="relative h-56 bg-gradient-to-b from-[#0f172a] to-black flex items-center justify-center rounded-t-2xl">
+                      {(work as any).image && (
+                        <img src={getAssetUrl((work as any).image)} alt={work.title} className="absolute inset-0 w-full h-full object-cover opacity-70" />
+                      )}
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)]" />
 
-                    {/* Diamond Logo */}
-                    <div className="w-16 h-16 bg-gray-400/10 border border-gray-700/30 rounded-lg flex items-center justify-center backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.02)]">
-                      <div className="w-6 h-6 bg-gray-400/20 rotate-45 shadow-inner shadow-black/40" />
+                      {/* Diamond Logo */}
+                      <div className="w-16 h-16 bg-gray-400/10 border border-gray-700/30 rounded-lg flex items-center justify-center backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.02)]">
+                        <div className="w-6 h-6 bg-gray-400/20 rotate-45 shadow-inner shadow-black/40" />
+                      </div>
+
+                      {/* Button */}
+                      <button onClick={() => router.push('/portfolio')} className="absolute bottom-5 px-5 py-2 rounded-full bg-[#101010] ring-1 ring-white/10 text-gray-300 text-sm backdrop-blur-sm hover:bg-[#161616] transition-all duration-300">
+                        View Projects Details →
+                      </button>
                     </div>
 
-                    {/* Button */}
-                    <button onClick={() => router.push('/portfolio')} className="absolute bottom-5 px-5 py-2 rounded-full bg-[#101010] ring-1 ring-white/10 text-gray-300 text-sm backdrop-blur-sm hover:bg-[#161616] transition-all duration-300">
-                      View Projects Details →
-                    </button>
-                  </div>
-
-                  {/* Bottom Info Section */}
-                  <div className="px-6 py-5">
-                    <h3 className="text-lg font-semibold mb-1">{work.title}</h3>
-                    <div className="flex justify-between text-gray-400 text-sm">
-                      <span>Category: {work.category}</span>
-                      <span>{work.year}</span>
+                    {/* Bottom Info Section */}
+                    <div className="px-6 py-5">
+                      <h3 className="text-lg font-semibold mb-1">{work.title}</h3>
+                      <div className="flex justify-between text-gray-400 text-sm">
+                        <span>Category: {work.category}</span>
+                        <span>{work.year}</span>
+                      </div>
                     </div>
-                  </div>
                   </Card>
                 </motion.div>
               ))}
@@ -734,42 +727,42 @@ const HomePage = () => {
                   className=""
                 >
                   <Card hover className="relative rounded-2xl bg-[#0b0b0b] overflow-hidden group transition-all duration-500 ring-1 ring-white/5 hover:ring-white/10 hover:-translate-y-1.5 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] border-0">
-                  {/* Subtle grid pattern background */}
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px] opacity-10"></div>
+                    {/* Subtle grid pattern background */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px] opacity-10"></div>
 
-                  {/* Icon Row */}
-                  <div className="relative z-10 flex items-center justify-center gap-6 pt-10 pb-6">
-                    {/* Left Icon (DX) */}
-                    <div className="relative">
-                      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2)_0%,transparent_70%)] blur-md opacity-30 group-hover:opacity-50 transition-all"></div>
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 flex items-center justify-center text-gray-200 font-semibold text-lg shadow-[0_0_25px_rgba(255,255,255,0.05)]">
-                        BC
+                    {/* Icon Row */}
+                    <div className="relative z-10 flex items-center justify-center gap-6 pt-10 pb-6">
+                      {/* Left Icon (DX) */}
+                      <div className="relative">
+                        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2)_0%,transparent_70%)] blur-md opacity-30 group-hover:opacity-50 transition-all"></div>
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 flex items-center justify-center text-gray-200 font-semibold text-lg shadow-[0_0_25px_rgba(255,255,255,0.05)]">
+                          BC
+                        </div>
+                      </div>
+
+                      <span className="text-gray-500 text-2xl font-light">+</span>
+
+                      {/* Right Icon (Client initial) */}
+                      <div className="relative">
+                        <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2)_0%,transparent_70%)] blur-md opacity-30 group-hover:opacity-50 transition-all"></div>
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 flex items-center justify-center text-gray-200 font-semibold text-lg shadow-[0_0_25px_rgba(255,255,255,0.05)]">
+                          {client.name[0]}
+                        </div>
                       </div>
                     </div>
 
-                    <span className="text-gray-500 text-2xl font-light">+</span>
-
-                    {/* Right Icon (Client initial) */}
-                    <div className="relative">
-                      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.2)_0%,transparent_70%)] blur-md opacity-30 group-hover:opacity-50 transition-all"></div>
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 flex items-center justify-center text-gray-200 font-semibold text-lg shadow-[0_0_25px_rgba(255,255,255,0.05)]">
-                        {client.name[0]}
-                      </div>
+                    {/* Content */}
+                    <div className="relative z-10 px-6 pb-10 text-center">
+                      <h3 className="text-lg font-semibold text-white mb-3">
+                        {client.name}
+                      </h3>
+                      <p className="text-sm text-gray-400 leading-relaxed">
+                        {client.description}
+                      </p>
                     </div>
-                  </div>
 
-                  {/* Content */}
-                  <div className="relative z-10 px-6 pb-10 text-center">
-                    <h3 className="text-lg font-semibold text-white mb-3">
-                      {client.name}
-                    </h3>
-                    <p className="text-sm text-gray-400 leading-relaxed">
-                      {client.description}
-                    </p>
-                  </div>
-
-                  {/* Overlay Glow Pattern */}
-                  <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_70%)] opacity-20 group-hover:opacity-30 transition-all"></div>
+                    {/* Overlay Glow Pattern */}
+                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_70%)] opacity-20 group-hover:opacity-30 transition-all"></div>
                   </Card>
                 </motion.div>
               ))}
@@ -814,9 +807,8 @@ const HomePage = () => {
                     >
                       <span>{faq.q}</span>
                       <ChevronDown
-                        className={`w-5 h-5 text-gray-400 transition-transform ${
-                          openFaq === i ? "rotate-180" : ""
-                        }`}
+                        className={`w-5 h-5 text-gray-400 transition-transform ${openFaq === i ? "rotate-180" : ""
+                          }`}
                       />
                     </button>
                     <motion.div
@@ -837,7 +829,7 @@ const HomePage = () => {
           </div>
         </section>
 
-        
+
 
         {/* CTA Section */}
         <section className="py-32 bg-[#1A1A1A] relative overflow-hidden">
