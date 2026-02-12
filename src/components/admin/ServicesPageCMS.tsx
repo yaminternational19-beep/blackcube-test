@@ -349,30 +349,6 @@ export function ServicesPageCMS() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const uploadAvatar = async (file: File) => {
-    const formData = new FormData();
-    formData.append('image', file); // MUST match backend
-
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload/image`,
-      {
-        method: 'POST',
-        body: formData,
-      }
-    );
-
-    const data = await res.json();
-    return data.data.url; // "/uploads/image-xxxx.webp"
-  };
-  const handleAvatarChange = async (file: File, index: number) => {
-    const avatarUrl = await uploadAvatar(file);
-
-    setTestimonials(prev =>
-      prev.map((t, i) =>
-        i === index ? { ...t, avatar: avatarUrl } : t
-      )
-    );
-  };
 
 
   const handleSave = async () => {

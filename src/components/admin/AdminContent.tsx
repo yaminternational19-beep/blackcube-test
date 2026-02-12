@@ -3,7 +3,7 @@ import { useContent } from "@/contexts/ContentContext";
 import { useEffect } from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import {FileText, Image, Type, BarChart3, Settings as SettingsIcon } from "lucide-react";
+import { FileText, Image, Type, BarChart3, Settings as SettingsIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ContactManagement } from "./ContactManagement";
 import { JobApplications } from "./JobApplications";
@@ -13,6 +13,7 @@ import { ServicesPageCMS } from "./ServicesPageCMS";
 import { ContactPageCMS } from "./ContactPageCMS";
 import { PortfolioPageCMS } from "./PortfolioPageCMS";
 import { CareerPageCMS } from "./CareerPageCMS";
+import { pageApi, uploadApi, getAssetUrl } from "@/lib/api";
 
 interface AdminContentProps {
   activeTab: string;
@@ -36,7 +37,7 @@ export function AdminContent({ activeTab }: AdminContentProps) {
         for (const p of content) {
           await loadPage(p.id);
         }
-      } catch {}
+      } catch { }
     })();
   }, [content, loadPage]);
 
@@ -126,7 +127,7 @@ export function AdminContent({ activeTab }: AdminContentProps) {
   // const renderHomePageEditor = () => {
   //   const homePage = content.find(page => page.id === 'home');
   //   if (!homePage) return null;
-    
+
   //   const collectFieldsByPrefix = (fields: ContentField[], prefix: string): ContentField[] => {
   //     let result: ContentField[] = [];
   //     for (const field of fields) {
@@ -453,7 +454,7 @@ export function AdminContent({ activeTab }: AdminContentProps) {
   //                             {field.value.startsWith("http") ||
   //                               field.value.startsWith("/") ? (
   //                               <img
-  //                                 src={field.value}
+  //                                 src={getAssetUrl(field.value as string)}
   //                                 alt="Preview"
   //                                 className="w-full h-full object-cover"
   //                                 onError={(e) => {

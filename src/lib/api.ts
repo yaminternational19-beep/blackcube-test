@@ -4,14 +4,7 @@ import axios, { AxiosInstance, AxiosError } from 'axios';
 
 // Determine API base URL. If NEXT_PUBLIC_API_URL is set to a host (no /api path),
 // append `/api` so frontend endpoints like `/auth/login` map to backend `/api/auth/login`.
-const rawBase = process.env.NEXT_PUBLIC_API_URL;
-
-if (!rawBase) {
-  throw new Error("NEXT_PUBLIC_API_URL is not configured");
-}
-
-const BASE_URL = rawBase.replace(/\/+$/, '');
-
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL!.replace(/\/+$/, '');
 export const API_BASE_URL = `${BASE_URL}/api`;
 
 // Utility function to get asset URLs (images, files, etc.)
